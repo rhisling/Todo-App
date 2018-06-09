@@ -13,19 +13,29 @@ console.log("Command: ", command);
 console.log("Yargs", argv);
 
 if (command === "add") {
-  var note = notes.addNote(argv.title, argv.body);
+  let note = notes.addNote(argv.title, argv.body);
   if (note) {
     console.log("note created");
-    console.log("--");
-    console.log(`Title: ${note.title}`);
-    console.log(`Body: ${note.body}`);
+    notes.displayNote(note);
   } else {
     console.log("note title taken");
   }
 } else if (command === "list") {
-  notes.getAll();
+  let allNotes = notes.getAll();
+  if (allNotes) {
+    allNotes.forEach(note => {
+      notes.displayNote(note);
+    });
+  } else {
+    console.log("Notes have not been added");
+  }
 } else if (command == "read") {
-  notes.getNote(argv.title);
+  let note = notes.getNote(argv.title);
+  if (Object.keys(note).length !== 0) {
+    notes.displayNote(note);
+  } else {
+    console.log("Note not found");
+  }
   console.log("Reading notes");
 } else if (command == "remove") {
   if (notes.removeNote(argv.title)) {
