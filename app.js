@@ -5,7 +5,35 @@ const _ = require("lodash");
 const yargs = require("yargs");
 
 const notes = require("./notes.js");
-const argv = yargs.argv;
+const argv = yargs
+  .command("add", "Add a new note", {
+    title: {
+      describe: "Title of the note",
+      demand: true,
+      alias: "t"
+    },
+    body: {
+      describe: "Body of the note",
+      demand: true,
+      alias: "b"
+    }
+  })
+  .command("list", "List all nodes")
+  .command("read", "read a note", {
+    title: {
+      describe: "Title of the note",
+      demand: true,
+      alias: "t"
+    }
+  })
+  .command("remove", "remove a note", {
+    title: {
+      describe: "Title of the note",
+      demand: true,
+      alias: "t"
+    }
+  })
+  .help().argv;
 
 var command = process.argv[2];
 console.log("Command: ", command);
