@@ -8,10 +8,18 @@ var addNote = (title, body) => {
     title,
     body
   };
+  try {
+    var notesString = fs.readFileSync("notes-data.json");
+    notes = JSON.parse(notesString);
+  } catch (error) {}
 
-  notes.push(note);
+  var findDuplicate = notes.filter(note => note.title === title);
+  console.log(findDuplicate);
 
-  fs.writeFileSync("notes-data.json", JSON.stringify(notes));
+  if (findDuplicate.length === 0) {
+    notes.push(note);
+    fs.writeFileSync("notes-data.json", JSON.stringify(notes));
+  }
 };
 
 var getAll = () => {
